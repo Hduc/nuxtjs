@@ -1,0 +1,16 @@
+{
+  "links": {
+    "home": "Trang chủ",
+    "about": "Thông tin",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng việt"
+  },
+  "home": {
+    "title": "Xin chào",
+    "introduction": "This is an introduction in English."
+  },
+  "about": {
+    "title": "Thông tin",
+    "introduction": "This page is made to give you more informations."
+  }
+}
