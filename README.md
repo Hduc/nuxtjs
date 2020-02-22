@@ -1,0 +1,1 @@
+﻿This is the code repository for my medium tutorial (https://medium.com/@danielrjames/host-nuxt-js-net-core-and-postgres-with-docker-nginx-and-https-1681d9bd0bbf) on how to host a nuxtjs, .net core api, postgres, and nginx reverse proxy app with docker on upcloud.

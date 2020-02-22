@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:10.8
+    restart: always
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: "pguser"
+      POSTGRES_PASSWORD: "pguserpass"
+      POSTGRES_DB: "dotnetcoredocker"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - internal
+  api:
+    container_name: api
+    build:
+      context: ./core
+      dockerfile: Dockerfile
+    restart: always
+    expose:
+      - 80
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      DB_CONNECTION_STRING: "Server=postgres;Port=5432;Database=thekycongnghe;User Id=spadmin;Password=P@ssW0rd"
+      TOKEN_HTTPS_META: "true"
+      TOKEN_AUDIENCE: "https://thekycongnghe.com"
+      TOKEN_ISSUER: "https://api.thekycongnghe.com"
+    depends_on:
+      - postgres
+    networks:
+      - internal
+      - web
+  nuxt:
+    container_name: nuxt
+    build:
+      context: ./nuxt
+      dockerfile: Dockerfile
+    restart: always
+    expose:
+      - 3000
+    environment:
+      HOST: 0.0.0.0
+    command: "npm run start"
+    depends_on:
+      - api
+    networks:
+      - web
+
+volumes:
+  pgdata:
+
+networks:
+  internal:
+  web:
+    external:
+      name: nginx_web
